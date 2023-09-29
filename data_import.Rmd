@@ -2,6 +2,9 @@
 title: "Data Import"
 output: github_document
 ---
+
+
+
 ```{r setup}
 library(tidyverse)#tidyverse是一个含有很多个包的library，具体含有哪些包，运行代码出现的那堆红色的就是，今天主要集中在讲tidyverse中的readr包
 ```
@@ -43,14 +46,13 @@ litters_df = read_csv("./data/FAS_litters.csv", skip = 10, col_names = FALSE)
 ```
 
 ## Other file formats
-
 Read in an excel file.
 以.csv结尾的文件用library(tidyverse)下的readr包，或者直接写library(readr)也行read_csv("file path")
 以.xlsx 结尾的文件叫做excel文件，读取时要使用readxl包，该包不在tidyverse之下
 
 ```{r}
 library(readxl)
-mlb_df = read_excel("./data/mlb11.xlsx")
+mlb_df = read_excel("./data/mlb11.xlsx",range = "A1:F7")
 mlb_df
 #可以通过？read_excel来查看关于读取excel文件的各种不同选择，比如其中 range = “A1:F7"会读取在这个范围内的excel数据
 ```
@@ -76,3 +78,9 @@ litters_base
 litters_readr
 ```
 
+## Exporting data
+Export the mlb sub-table
+```{r}
+write.csv(mlb_df, "./data/mlb_subtable.csv")
+```
+简单来说，就是用write.csv输出csv文件，前半段是r中文件名，后半段是保存路径及新名字

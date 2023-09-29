@@ -161,25 +161,19 @@ path”) 以.xlsx
 
 ``` r
 library(readxl)
-mlb_df = read_excel("./data/mlb11.xlsx")
+mlb_df = read_excel("./data/mlb11.xlsx",range = "A1:F7")
 mlb_df
 ```
 
-    ## # A tibble: 30 × 12
-    ##    team        runs at_bats  hits homeruns bat_avg strikeouts stolen_bases  wins
-    ##    <chr>      <dbl>   <dbl> <dbl>    <dbl>   <dbl>      <dbl>        <dbl> <dbl>
-    ##  1 Texas Ran…   855    5659  1599      210   0.283        930          143    96
-    ##  2 Boston Re…   875    5710  1600      203   0.28        1108          102    90
-    ##  3 Detroit T…   787    5563  1540      169   0.277       1143           49    95
-    ##  4 Kansas Ci…   730    5672  1560      129   0.275       1006          153    71
-    ##  5 St. Louis…   762    5532  1513      162   0.273        978           57    90
-    ##  6 New York …   718    5600  1477      108   0.264       1085          130    77
-    ##  7 New York …   867    5518  1452      222   0.263       1138          147    97
-    ##  8 Milwaukee…   721    5447  1422      185   0.261       1083           94    96
-    ##  9 Colorado …   735    5544  1429      163   0.258       1201          118    73
-    ## 10 Houston A…   615    5598  1442       95   0.258       1164          118    56
-    ## # ℹ 20 more rows
-    ## # ℹ 3 more variables: new_onbase <dbl>, new_slug <dbl>, new_obs <dbl>
+    ## # A tibble: 6 × 6
+    ##   team                 runs at_bats  hits homeruns bat_avg
+    ##   <chr>               <dbl>   <dbl> <dbl>    <dbl>   <dbl>
+    ## 1 Texas Rangers         855    5659  1599      210   0.283
+    ## 2 Boston Red Sox        875    5710  1600      203   0.28 
+    ## 3 Detroit Tigers        787    5563  1540      169   0.277
+    ## 4 Kansas City Royals    730    5672  1560      129   0.275
+    ## 5 St. Louis Cardinals   762    5532  1513      162   0.273
+    ## 6 New York Mets         718    5600  1477      108   0.264
 
 ``` r
 #可以通过？read_excel来查看关于读取excel文件的各种不同选择，比如其中 range = “A1:F7"会读取在这个范围内的excel数据
@@ -354,3 +348,13 @@ litters_readr
     ## # ℹ 39 more rows
     ## # ℹ 3 more variables: `Pups born alive` <dbl>, `Pups dead @ birth` <dbl>,
     ## #   `Pups survive` <dbl>
+
+## Exporting data
+
+Export the mlb sub-table
+
+``` r
+write.csv(mlb_df, "./data/mlb_subtable.csv")
+```
+
+简单来说，就是用write.csv输出csv文件，前半段是r中文件名，后半段是保存路径及新名字
