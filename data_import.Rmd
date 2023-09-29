@@ -58,7 +58,7 @@ mlb_df
 ```
 
 Read in a SAS file.
-Which need the package "haven"and function "read.sas"
+Which need the package "haven"and function "read_sas"
 ```{r}
 library(haven)
 pulse_df = read_sas("./data/public_pulse_data.sas7bdat")

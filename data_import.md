@@ -180,7 +180,7 @@ mlb_df
 ```
 
 Read in a SAS file. Which need the package “haven”and function
-“read.sas”
+“read_sas”
 
 ``` r
 library(haven)
