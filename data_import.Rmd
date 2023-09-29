@@ -63,3 +63,16 @@ pulse_df = read_sas("./data/public_pulse_data.sas7bdat")
 pulse_df
 ```
 
+## Comparison with Base R
+The difference between command 'read.csv' and 'read_csv'
+'read.csv'是r自带的，就是不需要写library，但是读出来的表头有些不准确或者还有其他问题，不推荐用
+'read_csv'是基于package readr，读取准确，推荐使用
+
+```{r}
+litters_base = read.csv("./data/FAS_litters.csv")
+litters_readr = read_csv("./data/FAS_litters.csv")
+
+litters_base 
+litters_readr
+```
+
