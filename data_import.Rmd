@@ -20,6 +20,10 @@ litters_df = janitor::clean_names(litters_df)
 ## Take a look at the data
 ```{r}
 litters_df
+# 注意这张图左下角的部分
+# <chr>means the column is a character variable
+# <dbl>means double, double is a certain kind of language in computer science, which means these are numerical variables
+
 ```
 
 ```{r}
@@ -29,5 +33,33 @@ tail(litters_df) #see last five or ten rows in the data
 
 ```{r}
 skimr::skim(litters_df) #Use to see some summary of the data and some histogram
+```
+
+## Options to read_csv
+
+```{r}
+litters_df = read_csv("./data/FAS_litters.csv", skip = 10, col_names = FALSE)
+#这里skip的意思是减去表格的前十行，但这样系统会把上一行的数据当成变量名称，所以这里用colname，会发现系统给表格赋了x1,x2,...xn
+```
+
+## Other file formats
+
+Read in an excel file.
+以.csv结尾的文件用library(tidyverse)下的readr包，或者直接写library(readr)也行read_csv("file path")
+以.xlsx 结尾的文件叫做excel文件，读取时要使用readxl包，该包不在tidyverse之下
+
+```{r}
+library(readxl)
+mlb_df = read_excel("./data/mlb11.xlsx")
+mlb_df
+#可以通过？read_excel来查看关于读取excel文件的各种不同选择，比如其中 range = “A1:F7"会读取在这个范围内的excel数据
+```
+
+Read in a SAS file.
+Which need the package "haven"and function "read.sas"
+```{r}
+library(haven)
+pulse_df = read_sas("./data/public_pulse_data.sas7bdat")
+pulse_df
 ```
 
