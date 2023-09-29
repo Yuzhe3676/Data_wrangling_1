@@ -3,18 +3,16 @@ title: "Data Import"
 output: github_document
 ---
 
-
-
 ```{r setup}
 library(tidyverse)#tidyverse是一个含有很多个包的library，具体含有哪些包，运行代码出现的那堆红色的就是，今天主要集中在讲tidyverse中的readr包
 ```
 
 ## Read in some data
 
-Read in the litters dataset.
+Read in the litters data set.
 
 ```{r}
-litters_df = read_csv("./data/FAS_litters.csv") ##读取csv文件，用的是readcsv这个命令,./的意思是从这个位置开始读取，到data这个包，然后读取后边的文件
+litters_df = read_csv("./data/FAS_litters.csv") ##读取csv文件，用的是readcsv这个命令,./的意思是从这个位置开始读取，到data这个包，然后读取后边的文件，这部分其实不写也可以
 litters_df = janitor::clean_names(litters_df)
 ##clean_names这个命令在janitor package下边，这里我们只用一次，可以用“janitor：：”这个形式，当然也可以用library引入janitor包，然后直接用clean_names
 #这里cleanname是因为原始的表，列表变量的名字含有特殊符号很不方便使用，可以用这个指令改变变量的名字

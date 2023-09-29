@@ -18,10 +18,10 @@ library(tidyverse)#tidyverse是一个含有很多个包的library，具体含有
 
 ## Read in some data
 
-Read in the litters dataset.
+Read in the litters data set.
 
 ``` r
-litters_df = read_csv("./data/FAS_litters.csv") ##读取csv文件，用的是readcsv这个命令,./的意思是从这个位置开始读取，到data这个包，然后读取后边的文件
+litters_df = read_csv("./data/FAS_litters.csv") ##读取csv文件，用的是readcsv这个命令,./的意思是从这个位置开始读取，到data这个包，然后读取后边的文件，这部分其实不写也可以
 ```
 
     ## Rows: 49 Columns: 8
