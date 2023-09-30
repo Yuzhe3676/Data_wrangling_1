@@ -354,7 +354,7 @@ litters_readr
 Export the mlb sub-table
 
 ``` r
-write.csv(mlb_df, "./data/mlb_subtable.csv")
+write_csv(mlb_df, "./data/mlb_subtable.csv")
 ```
 
-简单来说，就是用write.csv输出csv文件，前半段是r中文件名，后半段是保存路径及新名字
+简单来说，就是用write_csv输出csv文件，前半段是r中文件名，后半段是保存路径及新名字,属于readr包下的
