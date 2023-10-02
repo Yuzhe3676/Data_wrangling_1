@@ -1,0 +1,60 @@
+---
+title: "Data Manipulation"
+output: github_document
+---
+本节主要讲解使用tidyvers中的dplyr package来进行data manipulation
+```{r setup}
+library(tidyverse)#tidyverse本身并不是一个package，而是一个collection of package
+```
+
+## Load in the FAS Litters Data
+
+```{r}
+litters_df = read_csv("./data/FAS_litters.csv")
+litters_df = janitor::clean_names(litters_df)
+```
+
+## `select` 
+
+Choose some columns and not others.
+
+```{r}
+select(litters_df, group, gd0_weight)
+```
+
+冒号表示选这两列之间的所有列
+```{r}
+select(litters_df, group, gd0_weight:gd_of_birth)
+```
+
+减号表示删除某列
+```{r}
+select(litters_df, -litter_number)
+```
+
+Renaming columns
+
+下面这个表示提取这两列，同时将这两列另外命名
+```{r}
+select(litters_df, GROUP = group, LITTER_NUMBER = litter_number)
+```
+
+如果不想单独提出来列，只想改变某些列的名字
+```{r}
+rename(litters_df, GROUP = group, LITTER_NUMBER = litter_number)
+```
+
+Select Helpers
+
+```{r}
+select(litters_df, starts_with("gd"))#选取以gd开头的列
+```
+
+```{r}
+select(litters_df,  litter_number, everything())# 将litternumber提到第一列，其他列跟在后边
+```
+
+```{r}
+select(litters_df,  litter_number)#这个命令也可以将litternumber提到第一列，默认放在第一列，也可以指定
+```
+
