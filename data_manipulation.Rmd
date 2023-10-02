@@ -58,3 +58,37 @@ select(litters_df,  litter_number, everything())# 将litternumber提到第一列
 select(litters_df,  litter_number)#这个命令也可以将litternumber提到第一列，默认放在第一列，也可以指定
 ```
 
+## `filter`
+select是针对列的选择，filter是针对行的选择
+```{r}
+filter(litters_df, gd0_weight < 22) 
+```
+
+```{r}
+filter(litters_df, gd0_weight >= 22) 
+```
+
+```{r}
+filter(litters_df, gd_of_birth == 20) #这里用两个等号表示询问和筛选，如果只有一个等号表示赋值
+```
+
+```{r}
+filter(litters_df, !(gd_of_birth == 20) ) #叹号表示选出不等于这个数的这些行
+```
+```{r}
+filter(litters_df, gd_of_birth != 20) #也可以用这种方式进行选择
+```
+
+```{r}
+filter(litters_df, gd0_weight >= 22, gd_of_birth == 20) 
+```
+
+```{r}
+filter(litters_df, group == "Mod8")
+```
+
+同时选con7和mod8的数据
+```{r}
+filter(litters_df, group %in% c("Con7","Mod8"))
+```
+
