@@ -386,3 +386,145 @@ filter(litters_df, group %in% c("Con7","Mod8"))
     ## 13 Mod8  #2/95/2               28.5        44.5          20               9
     ## 14 Mod8  #82/4                 33.4        52.7          20               8
     ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+what about missing values
+
+``` r
+drop_na(litters_df)#删掉所有含有缺失值的行
+```
+
+    ## # A tibble: 31 × 8
+    ##    group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con7  #85                 19.7        34.7          20               3
+    ##  2 Con7  #1/2/95/2           27          42            19               8
+    ##  3 Con7  #5/5/3/83/3-3       26          41.4          19               6
+    ##  4 Con7  #5/4/2/95/2         28.5        44.1          19               5
+    ##  5 Mod7  #59                 17          33.4          19               8
+    ##  6 Mod7  #103                21.4        42.1          19               9
+    ##  7 Mod7  #3/82/3-2           28          45.9          20               5
+    ##  8 Mod7  #5/3/83/5-2         22.6        37            19               5
+    ##  9 Mod7  #106                21.7        37.8          20               5
+    ## 10 Mod7  #94/2               24.4        42.9          19               7
+    ## # ℹ 21 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+drop_na(litters_df, gd0_weight)
+```
+
+    ## # A tibble: 34 × 8
+    ##    group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con7  #85                 19.7        34.7          20               3
+    ##  2 Con7  #1/2/95/2           27          42            19               8
+    ##  3 Con7  #5/5/3/83/3-3       26          41.4          19               6
+    ##  4 Con7  #5/4/2/95/2         28.5        44.1          19               5
+    ##  5 Con8  #3/5/2/2/95         28.5        NA            20               8
+    ##  6 Con8  #5/4/3/83/3         28          NA            19               9
+    ##  7 Mod7  #59                 17          33.4          19               8
+    ##  8 Mod7  #103                21.4        42.1          19               9
+    ##  9 Mod7  #3/82/3-2           28          45.9          20               5
+    ## 10 Mod7  #4/2/95/2           23.5        NA            19               9
+    ## # ℹ 24 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+## `mutate`
+
+use to change current variables or creat new variables
+
+``` r
+mutate(
+  litters_df,
+  wt_gain = gd18_weight - gd0_weight, # creat variable
+  group = str_to_lower(group) # modify variable, transfer to lower case
+  )
+```
+
+    ## # A tibble: 49 × 9
+    ##    group litter_number   gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>                <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 con7  #85                   19.7        34.7          20               3
+    ##  2 con7  #1/2/95/2             27          42            19               8
+    ##  3 con7  #5/5/3/83/3-3         26          41.4          19               6
+    ##  4 con7  #5/4/2/95/2           28.5        44.1          19               5
+    ##  5 con7  #4/2/95/3-3           NA          NA            20               6
+    ##  6 con7  #2/2/95/3-2           NA          NA            20               6
+    ##  7 con7  #1/5/3/83/3-3/2       NA          NA            20               9
+    ##  8 con8  #3/83/3-3             NA          NA            20               9
+    ##  9 con8  #2/95/3               NA          NA            20               8
+    ## 10 con8  #3/5/2/2/95           28.5        NA            20               8
+    ## # ℹ 39 more rows
+    ## # ℹ 3 more variables: pups_dead_birth <dbl>, pups_survive <dbl>, wt_gain <dbl>
+
+## `arrange`
+
+Use to put things in order
+
+``` r
+arrange(litters_df, pups_born_alive)# 意思是将pups_born_olive这一列数据按照从小到大顺序排列
+```
+
+    ## # A tibble: 49 × 8
+    ##    group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con7  #85                 19.7        34.7          20               3
+    ##  2 Low7  #111                25.5        44.6          20               3
+    ##  3 Low8  #4/84               21.8        35.2          20               4
+    ##  4 Con7  #5/4/2/95/2         28.5        44.1          19               5
+    ##  5 Con8  #2/2/95/2           NA          NA            19               5
+    ##  6 Mod7  #3/82/3-2           28          45.9          20               5
+    ##  7 Mod7  #5/3/83/5-2         22.6        37            19               5
+    ##  8 Mod7  #106                21.7        37.8          20               5
+    ##  9 Con7  #5/5/3/83/3-3       26          41.4          19               6
+    ## 10 Con7  #4/2/95/3-3         NA          NA            20               6
+    ## # ℹ 39 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+``` r
+arrange(litters_df, pups_born_alive, gd0_weight)# 意思是将pups_born_olive这一列数据按照从小到大顺序排列后，在每个相同的pups_born_olive里按gd0_weight的顺序进行排列
+```
+
+    ## # A tibble: 49 × 8
+    ##    group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive
+    ##    <chr> <chr>              <dbl>       <dbl>       <dbl>           <dbl>
+    ##  1 Con7  #85                 19.7        34.7          20               3
+    ##  2 Low7  #111                25.5        44.6          20               3
+    ##  3 Low8  #4/84               21.8        35.2          20               4
+    ##  4 Mod7  #106                21.7        37.8          20               5
+    ##  5 Mod7  #5/3/83/5-2         22.6        37            19               5
+    ##  6 Mod7  #3/82/3-2           28          45.9          20               5
+    ##  7 Con7  #5/4/2/95/2         28.5        44.1          19               5
+    ##  8 Con8  #2/2/95/2           NA          NA            19               5
+    ##  9 Low8  #99                 23.5        39            20               6
+    ## 10 Low7  #112                23.9        40.5          19               6
+    ## # ℹ 39 more rows
+    ## # ℹ 2 more variables: pups_dead_birth <dbl>, pups_survive <dbl>
+
+## `%>%`Pipes
+
+Keyboard shortcuts are Ctrl + Shift + M (Windows) and Cmd + Shift + M
+(Mac) `%>%` and `|>` are similar can use interchangeably but have subtle
+difference.
+
+``` r
+litters_df =
+  read_csv("data/FAS_litters.csv") %>%  
+  janitor::clean_names() %>%  
+  select(-pups_survive) %>% 
+  mutate(
+    group = str_to_lower(group),
+    wt_gain = gd18_weight - gd0_weight,
+  ) %>% 
+  drop_na(gd0_weight) %>% 
+  arrange(group, wt_gain)
+```
+
+    ## Rows: 49 Columns: 8
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Group, Litter Number
+    ## dbl (6): GD0 weight, GD18 weight, GD of Birth, Pups born alive, Pups dead @ ...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.

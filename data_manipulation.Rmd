@@ -92,3 +92,51 @@ filter(litters_df, group == "Mod8")
 filter(litters_df, group %in% c("Con7","Mod8"))
 ```
 
+what about missing values
+```{r}
+drop_na(litters_df)#删掉所有含有缺失值的行
+```
+
+```{r}
+drop_na(litters_df, gd0_weight)
+```
+
+
+## ` mutate`
+use to change current variables or creat new variables
+```{r}
+mutate(
+  litters_df,
+  wt_gain = gd18_weight - gd0_weight, # creat variable
+  group = str_to_lower(group) # modify variable, transfer to lower case
+  )
+```
+
+## `arrange`
+Use to put things in order
+```{r}
+arrange(litters_df, pups_born_alive)# 意思是将pups_born_olive这一列数据按照从小到大顺序排列
+```
+
+```{r}
+arrange(litters_df, pups_born_alive, gd0_weight)# 意思是将pups_born_olive这一列数据按照从小到大顺序排列后，在每个相同的pups_born_olive里按gd0_weight的顺序进行排列
+```
+
+## ` %>% `Pipes
+Keyboard shortcuts are Ctrl + Shift + M (Windows) and Cmd + Shift + M (Mac)
+`%>%` and `|>` are similar can use interchangeably but have subtle difference.
+```{r}
+litters_df =
+  read_csv("data/FAS_litters.csv") %>%  
+  janitor::clean_names() %>%  
+  select(-pups_survive) %>% 
+  mutate(
+    group = str_to_lower(group),
+    wt_gain = gd18_weight - gd0_weight,
+  ) %>% 
+  drop_na(gd0_weight) %>% 
+  arrange(group, wt_gain)
+```
+
+
+
