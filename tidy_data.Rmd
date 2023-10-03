@@ -1,0 +1,101 @@
+---
+title: "Tidy data"
+output: github_document
+---
+
+```{r setup}
+library(tidyverse)
+```
+
+
+##  `pivot_longer` 
+Or say make the table from wide to long
+Load then PULSE data
+```{r}
+pulse_data =
+  haven::read_sas("data/public_pulse_data.sas7bdat") %>%
+  janitor::clean_names() 
+```
+
+Write format to long format
+```{r}
+pulse_data_tidy =
+  pulse_data %>%
+  pivot_longer(
+    bdi_score_bl:bdi_score_12m,
+    names_to = "visit",
+    names_prefix = "bdi_score_", #这是为了省去名字前面的bdi_score_前缀让数据看起来更简洁
+    values_to = "bdi"
+  )
+```
+
+rewrite,combine, and extend (to add a mutate)
+
+```{r}
+pulse_df =
+  haven::read_sas("data/public_pulse_data.sas7bdat") %>% 
+  janitor::clean_names() %>% 
+  pivot_longer(
+    bdi_score_bl:bdi_score_12m,
+    names_to = "visit",
+    names_prefix = "bdi_score_",
+    values_to = "bdi_score",
+  ) %>% 
+  relocate(id,visit) %>% ##用relocate将id和visit两列放到最前边
+  mutate(visit = recode(visit, "bl" = "00m")) #将visit列中的bl全部替换为00m,p8105.com上针对这一步有不同做法
+```
+
+## `pivot_wider`
+```{r}
+analysis_result = 
+  tibble(
+    group = c("treatment", "treatment", "placebo", "placebo"),
+    time = c("pre", "post", "pre", "post"),
+    mean = c(4, 8, 3.5, 4)
+  )
+```
+
+```{r}
+pivot_wider(
+  analysis_result, 
+  names_from = "time", 
+  values_from = "mean")
+```
+
+## Binding Rows
+
+Using the LotR data.
+
+First step: import each table
+
+```{r}
+fellowship_ring = 
+  readxl::read_excel("./data/LotR_Words.xlsx", range = "B3:D6") %>% 
+  mutate(movie = "fellowship_ring")
+
+two_towers = 
+  readxl::read_excel("./data/LotR_Words.xlsx", range = "F3:H6") %>% 
+  mutate(movie = "two_towers")
+
+return_king = 
+  readxl::read_excel("./data/LotR_Words.xlsx", range = "J3:L6") %>% 
+  mutate(movie = "return_king")
+```
+
+```{r}
+lotr_tidy = 
+  bind_rows(fellowship_ring, two_towers, return_king) %>% 
+  janitor::clean_names() %>% 
+  pivot_longer(
+    female:male,
+    names_to = "gender", 
+    values_to = "words") %>% 
+  mutate(race = str_to_lower(race)) %>% 
+  select(movie, everything()) #或者用relocate() 将movie列提取至第一列
+```
+
+
+
+
+
+
