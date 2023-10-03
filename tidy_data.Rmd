@@ -94,7 +94,42 @@ lotr_tidy =
   select(movie, everything()) #或者用relocate() 将movie列提取至第一列
 ```
 
+##Joining datasets
 
+Import and clean the FAS datasets
+
+```{r}
+pup_data = 
+  read_csv("./data/FAS_pups.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate(
+    sex = 
+      case_match(
+        sex, 
+        1 ~ "male", 
+        2 ~ "female"),
+    sex = as.factor(sex)) 
+##或者使用 mutate(sex = recode(sex, `1`= "male", `2` = "female"))
+
+litter_data = 
+  read_csv("./data/FAS_litters.csv") %>%  
+  janitor::clean_names() %>% 
+  separate(group, into = c("dose", "day_of_tx"), sep = 3) %>% 
+  #这行代码的意思是将group这列variable分为两列，因为一般有下滑线的时候r会自动划分，但这里没有，我们需要使用sep指令表示在第三个character后进行划分
+  relocate(litter_number) %>% 
+  mutate(
+    wt_gain = gd18_weight - gd0_weight,
+    dose = str_to_lower(dose))
+```
+
+Next, time to join them!
+left join- merge whatever in littersdata to pupdata
+```{r}
+fas_data = 
+  left_join(pup_data, litter_data, by = "litter_number") %>% 
+  arrange(litter_number) %>% 
+  relocate(litter_number, dose, day_of_tx)
+```
 
 
 
